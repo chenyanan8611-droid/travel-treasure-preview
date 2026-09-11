@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>京东旅行｜找茬预览版</title>
+    <script>
+      (() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("mode") === "preview") return;
+        const target = new URL("./app/", window.location.href);
+        params.delete("mode");
+        target.search = params.toString();
+        target.hash = window.location.hash;
+        window.location.replace(target.href);
+      })();
+    </script>
     <link rel="stylesheet" href="./preview-keyboard.css" />
     <style>
       * { box-sizing: border-box; }
