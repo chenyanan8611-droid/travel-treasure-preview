@@ -132,12 +132,24 @@
         background: #fff;
       }
       @media (max-width: 600px) {
-        html, body { height: 100%; min-height: 100%; }
-        body { display: block; min-width: 0; padding: 0; background: #fff; }
-        main, .device, .screen { width: 100%; height: 100%; }
-        .preview-label, .status-bar, .app-bar { display: none; }
-        .device, .screen { padding: 0; border-radius: 0; box-shadow: none; }
-        iframe { height: 100%; flex: none; }
+        html, body { width: 100%; height: 100%; min-height: 0; }
+        body {
+          position: relative;
+          min-width: 0;
+          overflow: hidden;
+          padding: 0;
+          background: #ececeb;
+        }
+        main {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 426px;
+          height: 898px;
+          transform: translate(-50%, -50%) scale(var(--preview-scale, 1));
+          transform-origin: center;
+        }
+        .preview-label { display: none; }
       }
     </style>
   </head>
@@ -158,7 +170,7 @@
             <strong class="app-bar-title">京东旅行｜找茬预览版</strong>
             <span class="app-bar-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0L8 7m4-4 4 4M5 11v8h14v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </div>
-          <iframe id="page-frame" src="./app/index.html?v=20260911-4" title="京东旅行宝藏玩法共创"></iframe>
+          <iframe id="page-frame" src="./app/index.html?v=20260911-5" title="京东旅行宝藏玩法共创"></iframe>
         </div>
       </div>
     </main>
@@ -171,6 +183,14 @@
         };
         updatePreviewTime();
         window.setInterval(updatePreviewTime, 30000);
+        const updatePreviewScale = () => {
+          const scale = window.innerWidth <= 600
+            ? Math.min((window.innerWidth - 12) / 426, (window.innerHeight - 12) / 898, 1)
+            : 1;
+          document.documentElement.style.setProperty("--preview-scale", String(Math.max(scale, 0.4)));
+        };
+        updatePreviewScale();
+        window.addEventListener("resize", updatePreviewScale);
       })();
     </script>
   </body>
