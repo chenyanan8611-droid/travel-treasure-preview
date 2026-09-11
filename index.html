@@ -36,42 +36,35 @@
       }
       .screen {
         position: relative;
+        display: flex;
         width: 402px;
         height: 874px;
+        flex-direction: column;
         overflow: hidden;
         border-radius: 47px;
         background: #fff;
       }
       .status-bar {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 3;
+        position: relative;
+        z-index: 4;
         display: flex;
-        height: 48px;
+        height: 44px;
+        flex: 0 0 44px;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 22px 0;
-        color: #fff;
+        padding: 4px 22px 0;
+        color: #111;
+        background: #fff;
         pointer-events: none;
         font-size: 14px;
         font-weight: 700;
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.32);
+        text-shadow: none;
       }
+      .status-time { display: flex; align-items: center; gap: 5px; }
+      .status-time svg { width: 13px; height: 13px; }
       .status-icons { display: flex; align-items: center; gap: 7px; }
-      .island {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        width: 106px;
-        height: 28px;
-        transform: translateX(-50%);
-        border-radius: 999px;
-        background: #111;
-      }
       .signal { display: flex; height: 13px; align-items: flex-end; gap: 2px; }
-      .signal i { display: block; width: 3px; border-radius: 2px; background: #fff; }
+      .signal i { display: block; width: 3px; border-radius: 2px; background: #111; }
       .signal i:nth-child(1) { height: 5px; }
       .signal i:nth-child(2) { height: 8px; }
       .signal i:nth-child(3) { height: 11px; }
@@ -82,7 +75,7 @@
         width: 24px;
         height: 12px;
         padding: 2px;
-        border: 1.5px solid #fff;
+        border: 1.5px solid #111;
         border-radius: 4px;
       }
       .battery::before {
@@ -90,7 +83,7 @@
         width: 75%;
         height: 100%;
         border-radius: 2px;
-        background: #fff;
+        background: #111;
         content: "";
       }
       .battery::after {
@@ -100,14 +93,41 @@
         width: 2px;
         height: 5px;
         border-radius: 0 2px 2px 0;
-        background: #fff;
+        background: #111;
         content: "";
       }
+      .app-bar {
+        position: relative;
+        z-index: 4;
+        display: grid;
+        height: 56px;
+        flex: 0 0 56px;
+        grid-template-columns: 82px minmax(0, 1fr) 42px;
+        align-items: center;
+        padding: 0 14px;
+        border-bottom: 1px solid #ededed;
+        color: #111;
+        background: #fff;
+      }
+      .app-bar-left { display: flex; align-items: center; gap: 14px; }
+      .app-bar-icon { display: grid; width: 28px; height: 36px; place-items: center; }
+      .app-bar-icon svg { width: 24px; height: 24px; }
+      .app-bar-title {
+        overflow: hidden;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       iframe {
-        position: absolute;
-        inset: 0;
+        position: relative;
+        display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
+        min-height: 0;
+        flex: 1 1 auto;
         border: 0;
         background: #fff;
       }
@@ -115,24 +135,43 @@
         html, body { height: 100%; min-height: 100%; }
         body { display: block; min-width: 0; padding: 0; background: #fff; }
         main, .device, .screen { width: 100%; height: 100%; }
-        .preview-label, .status-bar { display: none; }
+        .preview-label, .status-bar, .app-bar { display: none; }
         .device, .screen { padding: 0; border-radius: 0; box-shadow: none; }
+        iframe { height: 100%; flex: none; }
       }
     </style>
   </head>
   <body>
     <main>
-      <div class="preview-label">iPhone 17 逻辑视口 · 402 × 874</div>
+      <div class="preview-label">内部软件预览 · iPhone 17 · 402 × 874</div>
       <div class="device">
         <div class="screen">
           <div class="status-bar" aria-hidden="true">
-            <span>9:41</span>
-            <span class="island"></span>
+            <span class="status-time"><span id="preview-time">10:43</span><svg viewBox="0 0 16 16" fill="none"><path d="M5 12h6M4.5 10.5h7L10.4 9V6.6A2.4 2.4 0 0 0 8 4.2 2.4 2.4 0 0 0 5.6 6.6V9l-1.1 1.5Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 2l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
             <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="network">5G</span><span class="battery"></span></div>
           </div>
-          <iframe id="page-frame" src="./app/index.html?v=20260911-3" title="京东旅行宝藏玩法共创"></iframe>
+          <div class="app-bar" aria-hidden="true">
+            <div class="app-bar-left">
+              <span class="app-bar-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="app-bar-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </div>
+            <strong class="app-bar-title">京东旅行｜找茬预览版</strong>
+            <span class="app-bar-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0L8 7m4-4 4 4M5 11v8h14v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <iframe id="page-frame" src="./app/index.html?v=20260911-4" title="京东旅行宝藏玩法共创"></iframe>
         </div>
       </div>
     </main>
+    <script>
+      (() => {
+        const time = document.getElementById("preview-time");
+        const updatePreviewTime = () => {
+          const now = new Date();
+          time.textContent = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+        };
+        updatePreviewTime();
+        window.setInterval(updatePreviewTime, 30000);
+      })();
+    </script>
   </body>
 </html>
