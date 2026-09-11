@@ -1,0 +1,147 @@
+.screen {
+  --preview-keyboard-height: 292px;
+}
+
+.ios-keyboard {
+  position: relative;
+  z-index: 8;
+  width: 100%;
+  height: 0;
+  flex: 0 0 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(207, 210, 215, 0.97);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition:
+    height 240ms cubic-bezier(0.2, 0.78, 0.2, 1),
+    flex-basis 240ms cubic-bezier(0.2, 0.78, 0.2, 1),
+    opacity 160ms ease,
+    transform 240ms cubic-bezier(0.2, 0.78, 0.2, 1);
+  -webkit-backdrop-filter: blur(28px) saturate(1.25);
+  backdrop-filter: blur(28px) saturate(1.25);
+}
+
+.screen.keyboard-visible .ios-keyboard {
+  height: var(--preview-keyboard-height);
+  flex-basis: var(--preview-keyboard-height);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.ios-keyboard-suggestions {
+  display: grid;
+  height: 38px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1d1d1f;
+  font-size: 14px;
+  text-align: center;
+}
+
+.ios-keyboard-suggestions button {
+  height: 26px;
+  border: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.ios-keyboard-suggestions button:last-child {
+  border-right: 0;
+}
+
+.ios-keyboard-rows {
+  padding: 7px 5px 0;
+}
+
+.ios-keyboard-row {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.ios-key {
+  display: grid;
+  min-width: 0;
+  height: 42px;
+  flex: 1 1 0;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.34);
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 21px;
+  line-height: 1;
+  text-transform: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ios-key:active,
+.ios-key.is-active {
+  background: #aeb3bb;
+}
+
+.ios-keyboard-row--middle {
+  padding: 0 17px;
+}
+
+.ios-keyboard-row--third .ios-key[data-key="shift"],
+.ios-keyboard-row--third .ios-key[data-key="backspace"] {
+  max-width: 47px;
+  background: #aeb3bb;
+  font-size: 17px;
+}
+
+.ios-keyboard-row--third .ios-key[data-character] {
+  max-width: 38px;
+}
+
+.ios-keyboard-row--bottom {
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+.ios-keyboard-row--bottom .ios-key {
+  height: 40px;
+  border-radius: 6px;
+  background: #aeb3bb;
+  font-size: 15px;
+}
+
+.ios-keyboard-row--bottom .ios-key[data-key="space"] {
+  flex: 4.3 1 0;
+  background: #fff;
+}
+
+.ios-keyboard-row--bottom .ios-key[data-key="done"] {
+  flex: 1.7 1 0;
+  background: #0a84ff;
+  color: #fff;
+}
+
+.ios-keyboard-home {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  width: 122px;
+  height: 5px;
+  border-radius: 999px;
+  background: #111;
+  transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ios-keyboard {
+    transition: none;
+  }
+}
